@@ -3,514 +3,856 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Godel – Reciclaje Inteligente en Panamá</title>
+<title>Godel – Logística y Reciclaje Inteligente en Panamá</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Barlow+Condensed:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --black: #0e0e0c;
-    --white: #f5f3ee;
-    --green: #1a6644;
-    --green-light: #2d9e68;
-    --green-pale: #d4ede0;
-    --accent: #c8f060;
-    --gray: #6b6b62;
-    --gray-light: #e8e6e0;
-    --font-display: 'Syne', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: var(--font-body);
-    background: var(--white);
-    color: var(--black);
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 48px;
-    background: rgba(245,243,238,0.9);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-  }
-
-  .nav-logo {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 22px;
-    letter-spacing: -0.5px;
-    color: var(--black);
-    text-decoration: none;
-  }
-
-  .nav-logo span { color: var(--green); }
-
-  .nav-links {
-    display: flex; gap: 32px; list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--gray);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--green); }
-
-  .nav-cta {
-    background: var(--green);
-    color: var(--white) !important;
-    padding: 10px 22px;
-    border-radius: 100px;
-    font-weight: 500 !important;
-    transition: background 0.2s !important;
-  }
-
-  .nav-cta:hover { background: var(--green-light) !important; color: var(--white) !important; }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 48px 80px;
-    position: relative;
-    background: var(--black);
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 60% 70% at 80% 40%, #1a6644 0%, transparent 60%),
-                radial-gradient(ellipse 40% 50% at 10% 80%, #0d3322 0%, transparent 55%),
-                var(--black);
-  }
-
-  .hero-grid {
-    position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(200,240,96,0.04) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(200,240,96,0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
-  }
-
-  .hero-tag {
-    position: relative; z-index: 2;
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(200,240,96,0.12);
-    border: 1px solid rgba(200,240,96,0.3);
-    color: var(--accent);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 6px 16px;
-    border-radius: 100px;
-    width: fit-content;
-    margin-bottom: 32px;
-    letter-spacing: 0.5px;
-  }
-
-  .hero-tag::before {
-    content: '';
-    width: 6px; height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .hero-title {
-    position: relative; z-index: 2;
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: clamp(48px, 8vw, 96px);
-    line-height: 0.95;
-    color: var(--white);
-    letter-spacing: -2px;
-    margin-bottom: 28px;
-  }
-
-  .hero-title .accent-word {
-    color: var(--accent);
-    display: block;
-  }
-
-  .hero-sub {
-    position: relative; z-index: 2;
-    font-size: 18px;
-    font-weight: 300;
-    color: rgba(245,243,238,0.65);
-    max-width: 520px;
-    line-height: 1.6;
-    margin-bottom: 48px;
-  }
-
-  .hero-actions {
-    position: relative; z-index: 2;
-    display: flex; gap: 16px; align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--accent);
-    color: var(--black);
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 500;
-    padding: 14px 28px;
-    border-radius: 100px;
-    text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border: none; cursor: pointer;
-  }
-
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,240,96,0.3); }
-
-  .btn-ghost {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: transparent;
-    color: rgba(245,243,238,0.8);
-    font-size: 15px;
-    font-weight: 400;
-    padding: 14px 28px;
-    border-radius: 100px;
-    text-decoration: none;
-    border: 1px solid rgba(245,243,238,0.2);
-    transition: border-color 0.2s, color 0.2s;
-  }
-
-  .btn-ghost:hover { border-color: rgba(245,243,238,0.5); color: var(--white); }
-
-  .hero-stats {
-    position: absolute; right: 48px; bottom: 80px; z-index: 2;
-    display: flex; flex-direction: column; gap: 24px;
-  }
-
-  .stat {
-    text-align: right;
-  }
-
-  .stat-num {
-    font-family: var(--font-display);
-    font-size: 36px;
-    font-weight: 800;
-    color: var(--white);
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 12px;
-    color: rgba(245,243,238,0.45);
-    font-weight: 300;
-    letter-spacing: 0.5px;
-  }
-
-  .stat-accent { color: var(--accent); }
-
-  /* SECTIONS */
-  section { padding: 100px 48px; }
-
-  .section-tag {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--green);
-    margin-bottom: 16px;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -1px;
-    color: var(--black);
-    margin-bottom: 20px;
-  }
-
-  .section-sub {
-    font-size: 17px;
-    color: var(--gray);
-    max-width: 540px;
-    line-height: 1.65;
-  }
-
-  /* SERVICIOS */
-  .servicios { background: var(--white); }
-
-  .servicios-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2px;
-    margin-top: 60px;
-    border: 2px solid var(--black);
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .servicio-card {
-    background: var(--white);
-    padding: 40px 36px;
-    border-right: 2px solid var(--black);
-    border-bottom: 2px solid var(--black);
-    transition: background 0.25s;
-    cursor: default;
-  }
-
-  .servicio-card:hover { background: var(--green-pale); }
-
-  .servicio-card:last-child { border-right: none; }
-
-  .servicio-icon {
-    width: 48px; height: 48px;
-    background: var(--accent);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
-
-  .servicio-title {
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--black);
-  }
-
-  .servicio-desc {
-    font-size: 14px;
-    color: var(--gray);
-    line-height: 1.6;
-  }
-
-  /* PROCESO */
-  .proceso { background: var(--black); color: var(--white); }
-
-  .proceso .section-title { color: var(--white); }
-  .proceso .section-sub { color: rgba(245,243,238,0.55); }
-
-  .proceso-steps {
-    margin-top: 64px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0;
-    position: relative;
-  }
-
-  .proceso-step {
-    padding: 32px 28px;
-    border-left: 1px solid rgba(245,243,238,0.12);
-    position: relative;
-  }
-
-  .proceso-step:first-child { border-left: none; }
-
-  .step-num {
-    font-family: var(--font-display);
-    font-size: 48px;
-    font-weight: 800;
-    color: rgba(200,240,96,0.15);
-    line-height: 1;
-    margin-bottom: 16px;
-  }
-
-  .step-name {
-    font-family: var(--font-display);
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-
-  .step-desc {
-    font-size: 13px;
-    color: rgba(245,243,238,0.45);
-    line-height: 1.5;
-  }
-
-  .step-dot {
-    width: 8px; height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: absolute;
-    top: 32px; right: 24px;
-  }
-
-  /* MATERIALES */
-  .materiales { background: var(--gray-light); }
-
-  .materiales-grid {
-    margin-top: 56px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-  }
-
-  .material-card {
-    background: var(--white);
-    border-radius: 16px;
-    padding: 32px 28px;
-    display: flex; flex-direction: column; gap: 12px;
-    border: 1.5px solid transparent;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-
-  .material-card:hover { border-color: var(--green-light); transform: translateY(-4px); }
-
-  .material-emoji { font-size: 32px; }
-
-  .material-name {
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--black);
-  }
-
-  .material-detail {
-    font-size: 13px;
-    color: var(--gray);
-  }
-
-  .material-badge {
-    display: inline-block;
-    background: var(--green-pale);
-    color: var(--green);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 4px 10px;
-    border-radius: 100px;
-    width: fit-content;
-  }
-
-  /* POR QUÉ GODEL */
-  .porque {
-    background: var(--green);
-    color: var(--white);
-  }
-
-  .porque .section-title { color: var(--white); }
-  .porque .section-sub { color: rgba(245,243,238,0.7); }
-
-  .porque-grid {
-    margin-top: 60px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-  }
-
-  .razon {
-    border-top: 1px solid rgba(245,243,238,0.25);
-    padding-top: 24px;
-  }
-
-  .razon-title {
-    font-family: var(--font-display);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-
-  .razon-desc {
-    font-size: 14px;
-    color: rgba(245,243,238,0.7);
-    line-height: 1.6;
-  }
-
-  /* CONTACTO */
-  .contacto { background: var(--white); }
-
-  .contacto-inner {
-    max-width: 640px;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .contacto-inner .section-title { text-align: center; }
-  .contacto-inner .section-sub { margin: 0 auto 40px; text-align: center; }
-
-  .contacto-options {
-    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
-  }
-
-  .contact-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 28px;
-    border-radius: 100px;
-    font-size: 15px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: transform 0.2s;
-    font-family: var(--font-body);
-  }
-
-  .contact-btn:hover { transform: translateY(-2px); }
-
-  .contact-btn.whatsapp { background: #25D366; color: #fff; }
-  .contact-btn.email { background: var(--black); color: var(--white); }
-
-  /* FOOTER */
-  footer {
-    background: var(--black);
-    color: rgba(245,243,238,0.45);
-    padding: 40px 48px;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 16px;
-  }
-
-  .footer-logo {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 18px;
-    color: var(--white);
-  }
-
-  .footer-logo span { color: var(--accent); }
-
-  footer p { font-size: 13px; }
-
-  /* ANIMACIONES de entrada */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
-    .nav-links { display: none; }
-    .hero { padding: 0 24px 60px; }
-    .hero-stats { display: none; }
-    section { padding: 72px 24px; }
-    footer { padding: 32px 24px; flex-direction: column; text-align: center; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0a0f0a;
+  --white: #f2f5f0;
+  --green-dark: #0d3d1e;
+  --green: #145c2e;
+  --green-mid: #1e8045;
+  --green-light: #2aab5e;
+  --accent: #7ed640;
+  --accent-dim: rgba(126,214,64,0.15);
+  --gray: #6a7068;
+  --gray-light: #e5e9e3;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-cond: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  height: 64px;
+  background: rgba(10,15,10,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(126,214,64,0.15);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 3px;
+  color: var(--white);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.nav-logo .dot { color: var(--accent); }
+
+.nav-links { display: flex; gap: 32px; list-style: none; }
+
+.nav-links a {
+  font-family: var(--font-cond);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(242,245,240,0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+.nav-cta {
+  background: var(--accent) !important;
+  color: var(--black) !important;
+  padding: 8px 20px !important;
+  border-radius: 4px !important;
+  letter-spacing: 1px !important;
+}
+
+.nav-cta:hover { background: #96e855 !important; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  background: var(--black);
+  overflow: hidden;
+  padding-top: 64px;
+}
+
+.hero-noise {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.6;
+}
+
+.hero-left {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 64px 80px 80px;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(126,214,64,0.4);
+  color: var(--accent);
+  font-family: var(--font-cond);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 2px;
+  width: fit-content;
+  margin-bottom: 28px;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 5px; height: 5px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: blink 1.8s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; } 50% { opacity: 0.2; }
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 9vw, 120px);
+  line-height: 0.88;
+  color: var(--white);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.hero-title .line-green {
+  color: var(--accent);
+  display: block;
+}
+
+.hero-tagline {
+  font-family: var(--font-cond);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(242,245,240,0.35);
+  margin-bottom: 36px;
+}
+
+.hero-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(242,245,240,0.65);
+  line-height: 1.7;
+  max-width: 440px;
+  margin-bottom: 48px;
+}
+
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--accent);
+  color: var(--black);
+  font-family: var(--font-cond);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 14px 30px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  border: none; cursor: pointer;
+}
+
+.btn-primary:hover { background: #96e855; transform: translateY(-2px); }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent;
+  color: rgba(242,245,240,0.75);
+  font-family: var(--font-cond);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 14px 30px;
+  border-radius: 4px;
+  text-decoration: none;
+  border: 1px solid rgba(242,245,240,0.2);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+.hero-right {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 80px 80px 80px 40px;
+  gap: 48px;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 30%; right: 10%;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(20,92,46,0.7) 0%, transparent 65%);
+  filter: blur(60px);
+  z-index: 0;
+}
+
+.hero-stats {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  border: 1px solid rgba(126,214,64,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 380px;
+  align-self: flex-end;
+}
+
+.hero-stat {
+  background: rgba(255,255,255,0.03);
+  padding: 24px 20px;
+  border-right: 1px solid rgba(126,214,64,0.1);
+  border-bottom: 1px solid rgba(126,214,64,0.1);
+}
+
+.hero-stat:nth-child(even) { border-right: none; }
+.hero-stat:nth-last-child(-n+2) { border-bottom: none; }
+
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 40px;
+  letter-spacing: 2px;
+  color: var(--white);
+  line-height: 1;
+}
+
+.stat-val span { color: var(--accent); }
+
+.stat-lbl {
+  font-family: var(--font-cond);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(242,245,240,0.35);
+  margin-top: 4px;
+}
+
+.hero-strip {
+  position: relative; z-index: 1;
+  align-self: flex-end;
+  border-left: 2px solid var(--accent);
+  padding-left: 16px;
+  max-width: 320px;
+}
+
+.hero-strip p {
+  font-family: var(--font-cond);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(242,245,240,0.45);
+  line-height: 1.6;
+}
+
+.hero-strip strong { color: var(--accent); font-weight: 700; }
+
+/* ─── DIVIDER TICKER ─── */
+.ticker {
+  background: var(--accent);
+  overflow: hidden;
+  height: 42px;
+  display: flex; align-items: center;
+}
+
+.ticker-track {
+  display: flex; gap: 0;
+  animation: ticker 25s linear infinite;
+  white-space: nowrap;
+}
+
+.ticker-item {
+  font-family: var(--font-cond);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--black);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 16px;
+}
+
+.ticker-item::after {
+  content: '◆';
+  font-size: 8px;
+  opacity: 0.5;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── SECTIONS ─── */
+.section-wrap { padding: 100px 80px; }
+
+.section-tag {
+  font-family: var(--font-cond);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--green-mid);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 5vw, 68px);
+  line-height: 0.9;
+  letter-spacing: 2px;
+  color: var(--black);
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--gray);
+  max-width: 520px;
+  line-height: 1.7;
+}
+
+/* ─── SERVICIOS ─── */
+.servicios { background: var(--white); }
+
+.servicios-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 56px;
+  flex-wrap: wrap; gap: 24px;
+}
+
+.servicios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1.5px solid var(--black);
+}
+
+.servicio-card {
+  padding: 40px 36px;
+  border-right: 1.5px solid var(--black);
+  border-bottom: 1.5px solid var(--black);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+  cursor: default;
+}
+
+.servicio-card:hover { background: var(--green-dark); }
+.servicio-card:hover .servicio-title { color: var(--accent); }
+.servicio-card:hover .servicio-desc { color: rgba(242,245,240,0.6); }
+
+.servicio-card:nth-child(3n) { border-right: none; }
+.servicio-card:nth-last-child(-n+3) { border-bottom: none; }
+
+.servicio-num {
+  font-family: var(--font-display);
+  font-size: 64px;
+  color: rgba(0,0,0,0.05);
+  line-height: 1;
+  position: absolute;
+  top: 16px; right: 20px;
+  transition: color 0.3s;
+}
+
+.servicio-card:hover .servicio-num { color: rgba(126,214,64,0.08); }
+
+.servicio-icon-wrap {
+  width: 52px; height: 52px;
+  background: var(--accent);
+  border-radius: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
+}
+
+.nuevo-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--black);
+  font-family: var(--font-cond);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+}
+
+.servicio-title {
+  font-family: var(--font-cond);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--black);
+  margin-bottom: 10px;
+  transition: color 0.3s;
+  text-transform: uppercase;
+}
+
+.servicio-desc {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--gray);
+  line-height: 1.6;
+  transition: color 0.3s;
+}
+
+/* ─── PROCESO ─── */
+.proceso {
+  background: var(--black);
+  padding: 100px 80px;
+}
+
+.proceso .section-tag { color: var(--accent); opacity: 0.7; }
+.proceso .section-title { color: var(--white); }
+.proceso .section-sub { color: rgba(242,245,240,0.4); }
+
+.proceso-steps {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  position: relative;
+}
+
+.proceso-steps::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent) 0%, rgba(126,214,64,0.1) 100%);
+}
+
+.proceso-step {
+  padding: 20px 20px 32px;
+  position: relative;
+}
+
+.step-dot {
+  width: 14px; height: 14px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 3px solid var(--black);
+  outline: 1px solid var(--accent);
+  margin-bottom: 24px;
+  position: relative; z-index: 1;
+}
+
+.step-num {
+  font-family: var(--font-display);
+  font-size: 52px;
+  letter-spacing: 2px;
+  color: rgba(126,214,64,0.1);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.step-name {
+  font-family: var(--font-cond);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(242,245,240,0.35);
+  line-height: 1.5;
+}
+
+/* ─── MATERIALES ─── */
+.materiales { background: var(--gray-light); padding: 100px 80px; }
+
+.materiales-grid {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.material-card {
+  background: var(--white);
+  border: 1.5px solid transparent;
+  border-radius: 4px;
+  padding: 28px 24px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: default;
+}
+
+.material-card:hover {
+  border-color: var(--green-light);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px rgba(30,128,69,0.12);
+}
+
+.material-emoji { font-size: 28px; margin-bottom: 12px; }
+
+.material-name {
+  font-family: var(--font-cond);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 6px;
+}
+
+.material-detail {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--gray);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.material-badge {
+  display: inline-block;
+  font-family: var(--font-cond);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: rgba(20,92,46,0.1);
+  color: var(--green);
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+/* ─── PORQUE GODEL ─── */
+.porque {
+  background: var(--green-dark);
+  padding: 100px 80px;
+}
+
+.porque .section-tag { color: rgba(126,214,64,0.6); }
+.porque .section-title { color: var(--white); }
+.porque .section-sub { color: rgba(242,245,240,0.45); }
+
+.porque-grid {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid rgba(126,214,64,0.15);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.razon {
+  padding: 40px 32px;
+  border-right: 1px solid rgba(126,214,64,0.1);
+  transition: background 0.3s;
+}
+
+.razon:last-child { border-right: none; }
+.razon:hover { background: rgba(126,214,64,0.05); }
+
+.razon-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.razon-title {
+  font-family: var(--font-cond);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.razon-desc {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(242,245,240,0.6);
+  line-height: 1.65;
+}
+
+/* ─── CONTACTO ─── */
+.contacto {
+  background: var(--white);
+  padding: 100px 80px;
+}
+
+.contacto-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.contacto-left .section-title { margin-bottom: 16px; }
+.contacto-left .section-sub { margin-bottom: 36px; }
+
+.contacto-options { display: flex; flex-direction: column; gap: 12px; }
+
+.contact-btn {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 24px;
+  border-radius: 4px;
+  font-family: var(--font-cond);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.contact-btn:hover { transform: translateX(6px); }
+
+.contact-btn.whatsapp { background: #25D366; color: #fff; }
+.contact-btn.email { background: var(--black); color: var(--white); }
+.contact-btn.maps { background: var(--gray-light); color: var(--black); }
+
+.contacto-right {
+  background: var(--green-dark);
+  border-radius: 8px;
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contacto-right::before {
+  content: '';
+  position: absolute;
+  bottom: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(126,214,64,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.contacto-right h3 {
+  font-family: var(--font-display);
+  font-size: 36px;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+
+.info-row {
+  display: flex; gap: 12px; align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.info-icon {
+  width: 32px; height: 32px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(126,214,64,0.3);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.info-text strong {
+  font-family: var(--font-cond);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.info-text p {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(242,245,240,0.7);
+  line-height: 1.5;
+}
+
+.pagos {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(126,214,64,0.1);
+}
+
+.pagos p {
+  font-family: var(--font-cond);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(242,245,240,0.3);
+  margin-bottom: 12px;
+}
+
+.pagos-icons { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.pago-badge {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-family: var(--font-cond);
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(242,245,240,0.6);
+  letter-spacing: 0.5px;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--black);
+  padding: 48px 80px 36px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 32px;
+  letter-spacing: 4px;
+  color: var(--white);
+}
+
+.footer-logo span { color: var(--accent); }
+
+.footer-logo p {
+  font-family: var(--font-cond);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(242,245,240,0.3);
+  margin-top: 4px;
+}
+
+.footer-links { display: flex; gap: 48px; flex-wrap: wrap; }
+
+.footer-col h4 {
+  font-family: var(--font-cond);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(242,245,240,0.3);
+  margin-bottom: 16px;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(242,245,240,0.55);
+  text-decoration: none;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.footer-col a:hover { color: var(--accent); }
+
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px;
+  color: rgba(242,245,240,0.2);
+  flex-wrap: wrap; gap: 8px;
+  font-weight: 300;
+}
+
+/* ─── ANIMATIONS ─── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger */
+.fade-up:nth-child(2) { transition-delay: 0.1s; }
+.fade-up:nth-child(3) { transition-delay: 0.2s; }
+.fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+/* ─── MOBILE ─── */
+@media (max-width: 1024px) {
+  .servicios-grid { grid-template-columns: repeat(2, 1fr); }
+  .servicio-card:nth-child(2n) { border-right: none; }
+  .servicio-card:nth-child(3n) { border-right: 1.5px solid var(--black); }
+  .servicio-card:nth-child(2n) { border-right: none !important; }
+  .proceso-steps { grid-template-columns: repeat(3, 1fr); }
+  .porque-grid { grid-template-columns: repeat(2, 1fr); }
+  .razon:nth-child(2n) { border-right: none; }
+  .razon { border-bottom: 1px solid rgba(126,214,64,0.1); }
+  .contacto-inner { grid-template-columns: 1fr; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero-left { padding: 60px 24px 60px; }
+  .section-wrap, .proceso, .materiales, .porque, .contacto { padding: 72px 24px; }
+  .servicios-grid { grid-template-columns: 1fr; }
+  .servicio-card { border-right: none !important; }
+  .proceso-steps { grid-template-columns: repeat(2, 1fr); }
+  .porque-grid { grid-template-columns: 1fr; }
+  .footer-top { flex-direction: column; }
+  footer { padding: 40px 24px 28px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">GO<span>DEL</span></a>
+  <a href="#" class="nav-logo">GODEL<span class="dot">.</span></a>
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#proceso">Proceso</a></li>
@@ -521,79 +863,143 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-glow"></div>
 
-  <div class="hero-tag">Operando en Panamá</div>
+  <div class="hero-left">
+    <div class="hero-badge">Operando en Panamá</div>
 
-  <h1 class="hero-title">
-    Residuos que
-    <span class="accent-word">valen.</span>
-  </h1>
+    <h1 class="hero-title">
+      LOGÍSTICA
+      <span class="line-green">INTELIGENTE</span>
+      PANAMÁ
+    </h1>
 
-  <p class="hero-sub">
-    Compramos, recogemos y transformamos metales, plásticos y cartón en Panamá.
-    Logística propia, precio justo, proceso transparente.
-  </p>
+    <p class="hero-tagline">Construyendo el futuro de la manufactura sostenible</p>
 
-  <div class="hero-actions">
-    <a href="https://wa.me/+50768713902" class="btn-primary">
-      Vender mis materiales →
-    </a>
-    <a href="#proceso" class="btn-ghost">Ver cómo funciona</a>
+    <p class="hero-sub">
+      Acarreos, reciclaje industrial, limpieza, almacenamiento y más.
+      Flota propia con GPS, precio justo y proceso transparente.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="https://wa.me/+50768713902" class="btn-primary">
+        📱 WhatsApp · 6871-3902
+      </a>
+      <a href="#servicios" class="btn-outline">Ver servicios →</a>
+    </div>
   </div>
 
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num">8 <span class="stat-accent">ton</span></div>
-      <div class="stat-label">capacidad por viaje</div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="stat-val">8<span>t</span></div>
+        <div class="stat-lbl">cap. por viaje</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-val">24<span>/7</span></div>
+        <div class="stat-lbl">GPS en tiempo real</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-val">40<span>ft</span></div>
+        <div class="stat-lbl">almacén seguro</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-val">6<span>+</span></div>
+        <div class="stat-lbl">servicios activos</div>
+      </div>
     </div>
-    <div class="stat">
-      <div class="stat-num">24<span class="stat-accent">/7</span></div>
-      <div class="stat-label">logística con GPS</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">40<span class="stat-accent">ft</span></div>
-      <div class="stat-label">almacén en contenedor</div>
+
+    <div class="hero-strip">
+      <p>"Transformamos residuos en oportunidades" — <strong>Compromiso, Calidad y Confianza</strong></p>
     </div>
   </div>
 </section>
 
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <!-- duplicated for infinite loop -->
+    <div class="ticker-item">Acarreos en general</div>
+    <div class="ticker-item">Reciclaje industrial</div>
+    <div class="ticker-item">Limpieza industrial</div>
+    <div class="ticker-item">Almacenamiento 24/7</div>
+    <div class="ticker-item">Desinstalación de equipos</div>
+    <div class="ticker-item">Fumigación con gasolina</div>
+    <div class="ticker-item">Logística con GPS</div>
+    <div class="ticker-item">Acarreos en general</div>
+    <div class="ticker-item">Reciclaje industrial</div>
+    <div class="ticker-item">Limpieza industrial</div>
+    <div class="ticker-item">Almacenamiento 24/7</div>
+    <div class="ticker-item">Desinstalación de equipos</div>
+    <div class="ticker-item">Fumigación con gasolina</div>
+    <div class="ticker-item">Logística con GPS</div>
+  </div>
+</div>
+
 <!-- SERVICIOS -->
-<section class="servicios" id="servicios">
-  <p class="section-tag fade-up">Lo que hacemos</p>
-  <h2 class="section-title fade-up">Servicios de Godel</h2>
-  <p class="section-sub fade-up">Desde la recolección hasta la venta final, manejamos todo el ciclo del reciclaje industrial.</p>
+<section class="section-wrap servicios" id="servicios">
+  <div class="servicios-header">
+    <div>
+      <p class="section-tag fade-up">Lo que hacemos</p>
+      <h2 class="section-title fade-up">Nuestros<br>Servicios</h2>
+    </div>
+    <p class="section-sub fade-up">Soluciones industriales completas para empresas, constructoras y negocios en todo Panamá.</p>
+  </div>
 
   <div class="servicios-grid fade-up">
     <div class="servicio-card">
-      <div class="servicio-icon">♻️</div>
-      <div class="servicio-title">Compra de materiales</div>
-      <div class="servicio-desc">Compramos cartón, plástico, aluminio y metales ferrosos directamente en tu planta o negocio. Precio de mercado actualizado.</div>
+      <div class="servicio-num">01</div>
+      <div class="servicio-icon-wrap">🚛</div>
+      <div class="servicio-title">Acarreos en General</div>
+      <div class="servicio-desc">Transporte seguro y eficiente para tus cargas. Camión Isuzu 16-17ft con GPS en tiempo real. Hasta 8 toneladas por viaje.</div>
     </div>
+
     <div class="servicio-card">
-      <div class="servicio-icon">🚛</div>
-      <div class="servicio-title">Recolección logística</div>
-      <div class="servicio-desc">Camión Isuzu 16-17 ft con GPS. Hasta 8 toneladas por viaje. Servicio 24/7 con seguimiento en tiempo real.</div>
+      <div class="servicio-num">02</div>
+      <div class="servicio-icon-wrap">🧹</div>
+      <div class="servicio-title">Limpieza Industrial y de Construcción</div>
+      <div class="servicio-desc">Espacios limpios, seguros y productivos. Servicio especializado para plantas, galpones, obras y áreas industriales.</div>
     </div>
+
     <div class="servicio-card">
-      <div class="servicio-icon">⚙️</div>
-      <div class="servicio-title">Procesamiento</div>
-      <div class="servicio-desc">Clasificación, separación automatizada y compactación en pacas. Material listo para fundiciones, recicladoras o exportación.</div>
+      <div class="servicio-num">03</div>
+      <div class="servicio-icon-wrap">♻️</div>
+      <div class="servicio-title">Transporte de Residuos Reciclables</div>
+      <div class="servicio-desc">Compramos y recogemos metales, plástico, cartón y más. Comprometidos con el medio ambiente y la sostenibilidad.</div>
     </div>
+
     <div class="servicio-card">
-      <div class="servicio-icon">🌿</div>
-      <div class="servicio-title">Asesoría en sostenibilidad</div>
-      <div class="servicio-desc">Te ayudamos a implementar un plan de gestión de residuos reciclables para cumplir con buenas prácticas ambientales.</div>
+      <div class="servicio-num">04</div>
+      <div class="servicio-icon-wrap">🔧</div>
+      <div class="servicio-title">Desinstalación y Retiro de Equipos Industriales</div>
+      <div class="servicio-desc">Retiro seguro y responsable de maquinaria pesada y equipos. Coordinación técnica desde la desmontaje hasta el traslado.</div>
+    </div>
+
+    <div class="servicio-card">
+      <div class="servicio-num">05</div>
+      <div class="servicio-icon-wrap">📦</div>
+      <div class="servicio-title">Almacenamiento Temporal con Videovigilancia 24/7</div>
+      <div class="servicio-desc">Contenedor de 40ft con cámaras y acceso controlado. Seguridad y control total para tus equipos y materiales.</div>
+    </div>
+
+    <div class="servicio-card">
+      <div class="servicio-num">06</div>
+      <div class="servicio-icon-wrap">🪲</div>
+      <div>
+        <div class="nuevo-badge">Nuevo servicio</div>
+        <div class="servicio-title">Fumigación con Equipo de Gasolina</div>
+        <div class="servicio-desc">Control efectivo de plagas en áreas industriales, comerciales y domésticas. Equipo de alta potencia.</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- PROCESO -->
 <section class="proceso" id="proceso">
-  <p class="section-tag" style="color: var(--accent);">Cómo trabajamos</p>
-  <h2 class="section-title fade-up">Del residuo al recurso</h2>
-  <p class="section-sub fade-up">Un proceso industrial completo, de principio a fin.</p>
+  <p class="section-tag fade-up">Cómo trabajamos</p>
+  <h2 class="section-title fade-up">Del Residuo<br>al Recurso</h2>
+  <p class="section-sub fade-up">Un proceso industrial completo, de principio a fin, sin intermediarios.</p>
 
   <div class="proceso-steps fade-up">
     <div class="proceso-step">
@@ -638,8 +1044,8 @@
 <!-- MATERIALES -->
 <section class="materiales" id="materiales">
   <p class="section-tag fade-up">Qué compramos</p>
-  <h2 class="section-title fade-up">Materiales que aceptamos</h2>
-  <p class="section-sub fade-up">Cotización en tiempo real según precios internacionales de commodities.</p>
+  <h2 class="section-title fade-up">Materiales<br>Aceptados</h2>
+  <p class="section-sub fade-up">Cotización según precios internacionales de commodities. Precio justo, pago inmediato.</p>
 
   <div class="materiales-grid fade-up">
     <div class="material-card">
@@ -663,7 +1069,7 @@
     <div class="material-card">
       <div class="material-emoji">📦</div>
       <div class="material-name">Cartón y papel</div>
-      <div class="material-detail">Cajas, papel corrugado, archivo y cartón compactado.</div>
+      <div class="material-detail">Cajas, corrugado, archivo y cartón compactado.</div>
       <span class="material-badge">Volumen</span>
     </div>
     <div class="material-card">
@@ -683,24 +1089,28 @@
 
 <!-- POR QUÉ GODEL -->
 <section class="porque">
-  <p class="section-tag" style="color: rgba(200,240,96,0.6); letter-spacing:2px;">Por qué elegirnos</p>
-  <h2 class="section-title fade-up">La diferencia Godel</h2>
-  <p class="section-sub fade-up">No somos intermediarios. Tenemos flota, planta y mercado propio.</p>
+  <p class="section-tag fade-up">Por qué elegirnos</p>
+  <h2 class="section-title fade-up" style="color:var(--white)">La Diferencia<br>Godel</h2>
+  <p class="section-sub fade-up" style="color:rgba(242,245,240,0.4); margin-bottom:0">No somos intermediarios. Tenemos flota, planta y mercado propio.</p>
 
   <div class="porque-grid fade-up">
     <div class="razon">
+      <div class="razon-icon">🚛</div>
       <div class="razon-title">Logística propia 24/7</div>
-      <div class="razon-desc">Camión Isuzu con GPS en tiempo real. Sin terceros, sin retrasos.</div>
+      <div class="razon-desc">Camión Isuzu con GPS en tiempo real. Sin terceros, sin retrasos. Servicio disponible toda la semana.</div>
     </div>
     <div class="razon">
+      <div class="razon-icon">📈</div>
       <div class="razon-title">Precio de mercado real</div>
       <div class="razon-desc">Cotizamos según precios internacionales de cobre, aluminio, acero y litio del día.</div>
     </div>
     <div class="razon">
+      <div class="razon-icon">⚙️</div>
       <div class="razon-title">Proceso completo</div>
       <div class="razon-desc">Desde la recolección hasta el cliente final: fundiciones, recicladoras o exportación.</div>
     </div>
     <div class="razon">
+      <div class="razon-icon">🌿</div>
       <div class="razon-title">Compromiso ambiental</div>
       <div class="razon-desc">Operamos con responsabilidad ambiental. Ayudamos a empresas a cumplir sus metas de sostenibilidad.</div>
     </div>
@@ -710,36 +1120,116 @@
 <!-- CONTACTO -->
 <section class="contacto" id="contacto">
   <div class="contacto-inner">
-    <p class="section-tag" style="text-align:center;">Hablemos</p>
-    <h2 class="section-title fade-up">¿Tienes material para vender?</h2>
-    <p class="section-sub fade-up">Contáctanos hoy. Te damos cotización rápida y coordinamos la recolección.</p>
-    <div class="contacto-options fade-up">
-      <a href="https://wa.me/+50768713902" class="contact-btn whatsapp">
-        📱 WhatsApp · +507 6871-3902
-      </a>
-      <a href="mailto:l.lasso@hotmail.com" class="contact-btn email">
-        ✉️ Enviar email
-      </a>
+    <div class="contacto-left fade-up">
+      <p class="section-tag">Hablemos</p>
+      <h2 class="section-title">¿Listo para<br>empezar?</h2>
+      <p class="section-sub">Contáctanos hoy. Te damos cotización rápida y coordinamos la recolección o el servicio que necesitas.</p>
+      <div class="contacto-options">
+        <a href="https://wa.me/+50768713902" class="contact-btn whatsapp">
+          📱 WhatsApp · 6871-3902
+        </a>
+        <a href="mailto:l.lasso@hotmail.com" class="contact-btn email">
+          ✉️ l.lasso@hotmail.com
+        </a>
+        <a href="https://maps.google.com/?q=Panama" class="contact-btn maps" target="_blank">
+          📍 Panamá, República de Panamá
+        </a>
+      </div>
+    </div>
+
+    <div class="contacto-right fade-up">
+      <h3>GODEL<br>INDUSTRY</h3>
+
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div class="info-text">
+          <strong>Teléfono / WhatsApp</strong>
+          <p>+507 6871-3902</p>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">✉️</div>
+        <div class="info-text">
+          <strong>Correo electrónico</strong>
+          <p>l.lasso@hotmail.com</p>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">🏭</div>
+        <div class="info-text">
+          <strong>Almacén</strong>
+          <p>Contenedor 40ft con videovigilancia 24/7</p>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">🕐</div>
+        <div class="info-text">
+          <strong>Disponibilidad</strong>
+          <p>Lunes a Sábado · 7:00am – 6:00pm<br>Emergencias 24/7</p>
+        </div>
+      </div>
+
+      <div class="pagos">
+        <p>Medios de pago</p>
+        <div class="pagos-icons">
+          <span class="pago-badge">VISA</span>
+          <span class="pago-badge">Mastercard</span>
+          <span class="pago-badge">Clave</span>
+          <span class="pago-badge">Yappy</span>
+          <span class="pago-badge">Efectivo</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">GO<span>DEL</span></div>
-  <p>Reciclaje inteligente y logística sostenible · Panamá</p>
-  <p>© 2025 Godel Industry · by Leonardo Lasso S.</p>
+  <div class="footer-top">
+    <div class="footer-logo">
+      GODEL<span>.</span>
+      <p>Logística y Reciclaje · Panamá</p>
+    </div>
+
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <a href="#servicios">Acarreos en general</a>
+        <a href="#servicios">Limpieza industrial</a>
+        <a href="#servicios">Reciclaje</a>
+        <a href="#servicios">Almacenamiento</a>
+        <a href="#servicios">Desinstalación de equipos</a>
+        <a href="#servicios">Fumigación</a>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <a href="#proceso">Proceso</a>
+        <a href="#materiales">Materiales</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <a href="https://wa.me/+50768713902">+507 6871-3902</a>
+        <a href="mailto:l.lasso@hotmail.com">l.lasso@hotmail.com</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2025 Godel Industry · Leonardo Lasso S.</span>
+    <span>Construyendo el futuro de la manufactura sostenible · Panamá</span>
+  </div>
 </footer>
 
 <script>
-  // Fade-up on scroll
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-      }
+      if (e.isIntersecting) e.target.classList.add('visible');
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
